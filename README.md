@@ -5,7 +5,7 @@ This project explores COVID-19 data from January 2020 to November 2022. Basic to
 ![image](https://user-images.githubusercontent.com/112798984/206856707-350c7e01-ba1b-4d41-aba4-ebfe4ad748c7.png)
 
 # THE DATA
-The dataset is from https://ourworldindata.org/covid-deaths. It has data from January 2020 to November 2022. I manipulated the data in Excel to contain the columns I wanted to work with.
+The dataset is from [OUR WORLD IN DATA](https://ourworldindata.org/covid-deaths). It has data from January 2020 to November 2022. I manipulated the data in Excel to contain the columns I wanted to work with.
 # DATASET FEATURES
 COVID-19 Deaths
 ![image](https://user-images.githubusercontent.com/112798984/206856921-3a26f1b1-a189-4b64-9649-e786c9221881.png)
@@ -20,3 +20,6 @@ The goal of this project is to explore 2020-2022 COVID-19 Data by performing que
 * The INDIA has an infection rate of 3.15% AND WE'RE 160TH PLACE. In 2020, the INDIA'S infection rate was 0.64%. In 2021 it was 2.43%.
 * Presently, there are 639479103 cases and 6625748 deaths worldwide due to COVID-19. The current global death percentage is 1.03282719260582%. 
 * As of right now, North America has the highest death count due to COVID-19
+
+# SOURCES
+[AlexTheAnalyst](https://github.com/AlexTheAnalyst/PortfolioProjects)
