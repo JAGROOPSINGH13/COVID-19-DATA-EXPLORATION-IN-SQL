@@ -1,0 +1,193 @@
+/*
+JAGROOP SINGH
+
+COVID-19 Data Exploration
+
+Skills Used:  WINDOWS FUNCTIONS, AGGREGATE FUNCTIONS, CONVERTING DATA TYPES
+Data: The dataset is from https://ourworldindata.org/covid-deaths. It has data from January 2020 to November 2022. 
+I manipulated the data in Excel to contain the columns I wanted to work with.
+Task: The goal of this project is to explore 2020-2022 COVID-19 Data by asking and answering data exploration questions. 
+I choose to look at insights for the INDIA since I am a INDIA citizen. I also explored data globally and regionally.
+*/
+
+--VIEWING THE DATASET---
+
+--COVID DEATHS DATA
+
+SELECT *
+FROM Covid_Deaths$
+WHERE continent IS NOT NULL
+ORDER BY date 
+
+
+ --- DATA EXPLORATION
+ 
+
+ --HOW MANY COVID-19 CASES IN THE INDIA?HOW MANY DEATHS?WHAT IS THE PERCENTAGE DEATH RATE?
+
+
+ SELECT location,date,total_cases,total_deaths,(total_deaths/total_cases)*100 AS DEATH_PER_CASE
+FROM Covid_Deaths$
+WHERE location LIKE '%INDIA%'
+ORDER BY date
+
+
+SELECT location,MAX(CAST(total_cases AS INT)) AS TOTAL_CASES,MAX(CAST(total_deaths AS INT))AS TOTAL_DEATHS,(MAX(CONVERT(INT,total_deaths))/MAX(total_cases))*100 AS DEATH_PER_RATE
+FROM Covid_Deaths$
+WHERE location LIKE '%INDIA%'
+GROUP BY location
+
+---as of november 2022 there are 44671708 total cases and the death percentage is about 1.18%
+---this means that 44671708 people have been infected by COVID-19 since JAN 2020 and that there is about a 1.18% chance of dying if you contract COVID-19 while living in INDIA.
+
+
+--how does this compare to a year age,two year ago?
+
+ SELECT location,date,total_cases,total_deaths,(total_deaths/total_cases)*100 AS DEATH_PER_CASE
+FROM Covid_Deaths$
+WHERE location LIKE '%INDIA%'AND DATE= '2021-11-23 '
+ORDER BY date
+
+
+ SELECT location,date,total_cases,total_deaths,(total_deaths/total_cases)*100 AS DEATH_PER_CASE
+FROM Covid_Deaths$
+WHERE location LIKE '%INDIA%'AND DATE= '2020-11-23 '
+ORDER BY date
+
+---one year ago, 34535763 people were infected with covid 19 and 1.35% chance of death upon contraction
+---two year ago, 9177840 people were infected with covid 19 and 1.46% chance of death upon contraction
+
+
+--WHAT PERCENTAGE OF THE INDIAN POPULATION CONTRACTED COVID-19?
+--THIS SHOW WHAT PERCENTAGE OF THE INDIAN POPULATION WAS INFECTED WITH COVID-19
+
+SELECT LOCATION,MAX(total_cases)AS TOTAL_CASES,MAX(CAST(total_deaths AS INT))AS TOTAL_DEATH,(MAX(total_cases)/MAX(population))*100 AS POPULATION_INFECTED_PER,(MAX(CAST(total_deaths AS INT))/MAX(population))*100 AS POPULATION_DEATH_PER
+FROM Covid_Deaths$
+WHERE location LIKE '%INDIA%'
+GROUP BY location
+
+--3.15% POPULATION OF INDIA WAS INFECTED AND 0.037% POPULATION OF INDIA WAS DEAD BY COVID-19 TILL NOVEMBER 2022
+
+
+----WHICH COUNTRY HAVE THE HIGHEST INFECTION RATE?
+----SHOWING COUNTRIES WITH HIGHEST INFECTION RATE COMPARED TO THEIR POPULATION
+
+SELECT LOCATION, MAX(total_cases)AS TOTAL_CASES,MAX(population)AS TOTAL_POPULATION,(MAX(TOTAL_CASES)/MAX(population))*100 AS POPULATION_INFECTED_PER
+FROM Covid_Deaths$
+GROUP BY location
+ORDER BY POPULATION_INFECTED_PER DESC
+
+---WHERE DOES THE INDIA FALL?
+
+SELECT LOCATION, MAX(total_cases)AS TOTAL_CASES,MAX(population)AS TOTAL_POPULATION,(MAX(TOTAL_CASES)/MAX(population))*100 AS POPULATION_INFECTED_PER
+FROM Covid_Deaths$
+WHERE LOCATION LIKE '%INDIA%'
+GROUP BY location
+
+
+-- THE COUNTRY WITH THE HUGHEST INFECTION RATE IS CYPRUS.
+---THE INDIA HAS AN INFECTION RATE OF
+--3.15% AND WE'RE 160TH
+
+-------HAS THIS CHANGE OVER TIME
+
+SELECT LOCATION, MAX(total_cases)AS TOTAL_CASES,MAX(population)AS TOTAL_POPULATION,(MAX(TOTAL_CASES)/MAX(population))*100 AS POPULATION_INFECTED_PER
+FROM Covid_Deaths$
+WHERE location LIKE '%INDIA%'AND DATE= '2020-11-23 '
+GROUP BY location
+
+SELECT LOCATION, MAX(total_cases)AS TOTAL_CASES,MAX(population)AS TOTAL_POPULATION,(MAX(TOTAL_CASES)/MAX(population))*100 AS POPULATION_INFECTED_PER
+FROM Covid_Deaths$
+WHERE location LIKE '%INDIA%'AND DATE= '2021-11-23 '
+GROUP BY location
+
+SELECT LOCATION, MAX(total_cases)AS TOTAL_CASES,MAX(population)AS TOTAL_POPULATION,(MAX(TOTAL_CASES)/MAX(population))*100 AS POPULATION_INFECTED_PER
+FROM Covid_Deaths$
+WHERE location LIKE '%INDIA%'AND DATE= '2022-11-23 '
+GROUP BY location
+
+---YES,IN 2020, THE INDIA INFECTED RATE WAS 0.64% AND IN 2021 IT WAS 2.43%
+--THE INFECTION RATE NOW IS 3.15%
+---
+
+--WHICH COUNTRY HAD THE HIGHEST DEATH COUNT IN 2022,2021 AND 2020?
+---SHOWING THE CONTRIES WITH HIGHEST DEATH COUNT PER POPULATION
+
+--2022
+SELECT LOCATION, MAX(CAST(total_deaths AS int))AS TOTAL_DEATH
+FROM Covid_Deaths$
+WHERE 
+continent IS NOT NULL --WAS READING IN COUNTRIES AS CONTINENT SO HAD TO INCLUDE THIS
+GROUP BY location
+ORDER BY TOTAL_DEATH DESC
+
+--2021
+SELECT LOCATION, MAX(CAST(total_deaths AS int))AS TOTAL_DEATH
+FROM Covid_Deaths$
+WHERE 
+continent IS NOT NULL AND (DATEPART(YY,DATE)=2021)
+GROUP BY location
+ORDER BY TOTAL_DEATH DESC
+
+--2020
+SELECT LOCATION, MAX(CAST(total_deaths AS int))AS TOTAL_DEATH
+FROM Covid_Deaths$
+WHERE 
+continent IS NOT NULL AND (DATEPART(YY,DATE)=2020)
+GROUP BY location
+ORDER BY TOTAL_DEATH DESC
+
+
+---THE UNITED STATE, BRAZIL AND INDIA HAVE THE HIGHEST DEATH COUNTS EACH YEAR.
+--THE DEATH COUNT IN MEXICO HAS IMPROVED SINCE 2020, GOING FROM 4TH PLACE TO 5TH UK WENT FROM 5TH TO 7TH.RUSSIA WENT FROM 9TH TO 4TH
+
+
+
+--------------------------------------------------------------
+--LET'S BREAD THINGS DOWN BY CONTINENT
+--------------------------------------------------------------
+--HIGHEST INFECTION COUNT AND HIGHEST DEATH COUNT BY CONTINENT 
+
+--HIGHEST INFECTION COUNT
+SELECT continent,MAX(total_cases)AS TOTAL_CASES_COUNT
+FROM covid_deaths$
+WHERE continent IS NOT NULL
+GROUP BY continent
+ORDER BY TOTAL_CASES_COUNT DESC
+
+--HIGHEST DEATH COUNT
+SELECT continent,MAX(CAST(total_deaths AS INT))AS TOTAL_DEATH_COUNT
+FROM covid_deaths$
+WHERE continent IS NOT NULL
+GROUP BY continent
+ORDER BY TOTAL_DEATH_COUNT DESC
+
+--AS OF RIGHT NOW NORTH AMERICA HAS THE HIGHEST INFECTION COUNT AND HIGHEST DEATH COUNT
+
+---------------------------------------------------------------------------------------------
+--GLOBAL NUMBERS
+---------------------------------------------------------------------------------------------
+
+---WHAT IS THE GLOBAL DEATH PERCENTAGE PER DAY?
+SELECT DATE,SUM(new_cases) AS TOTAL_CASES,SUM(CAST(NEW_DEATHS AS INT)) AS TOTAL_DEATHS,(SUM(CAST(NEW_DEATHS AS INT))/SUM(new_cases))*100 AS GLOBAL_DEATH_PER
+FROM covid_deaths$
+WHERE continent IS NOT NULL
+GROUP BY DATE
+ORDER BY TOTAL_CASES,date
+
+--HOW MANY CASES THERE WORLDWIDE?
+----HOW MANY DEATHS?
+------WHAT IS THE OVER ALL GLOBEL DEATH PER
+
+SELECT DATE,SUM(total_cases) AS TOTAL_CASES,SUM(CAST(total_deaths AS INT)) AS TOTAL_DEATHS,(SUM(CAST(total_deaths AS INT))/SUM(total_cases))*100 AS GLOBAL_DEATH_PER
+FROM covid_deaths$
+WHERE continent IS NOT NULL
+GROUP BY DATE
+ORDER BY TOTAL_CASES DESC
+
+
+
+---PRESENTLY THERE ARE 639479103 CASES AND 6625748 DEATHS WORLDWIDE DUE TO COVID-19.
+------THE GLOBAL DEATH PERCENTAGE IS 1.03611642177461%
+
+
