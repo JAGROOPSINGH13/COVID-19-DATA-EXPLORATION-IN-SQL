@@ -1,6 +1,6 @@
 # COVID-19-DATA-EXPLORATION PROJECT
 
-This project explores COVID-19 data from January 2020 to November 2022. Basic to advanced SQL queries are executed to answer questions and look at trends over the course of COVID-19. After the data exploration is complete in SQL, the queries are used to create some data visualizations in Tableau. My data exploration in SQL can be viewed [HERE](https://github.com/JAGROOPSINGH13/COVID-19-DATA-EXPLORATION-IN-SQL/commit/1489ca15e6c68f28c842677d05cca8adcbfe251f) and my dashboard in Tableau here. This project was built using SQL Server Management Studio (SSMS)
+This project explores COVID-19 data from January 2020 to November 2022. Basic to advanced SQL queries are executed to answer questions and look at trends over the course of COVID-19. After the data exploration is complete in SQL, the queries are used to create some data visualizations in Tableau. My data exploration in SQL can be viewed [HERE](https://github.com/JAGROOPSINGH13/COVID-19-DATA-EXPLORATION-IN-SQL/commit/1489ca15e6c68f28c842677d05cca8adcbfe251f) and my dashboard in Tableau [HERE](https://public.tableau.com/authoring/COVID-19DASHBOARD_16707452121650/Dashboard1#1). This project was built using SQL Server Management Studio (SSMS)
 
 ![image](https://user-images.githubusercontent.com/112798984/206856707-350c7e01-ba1b-4d41-aba4-ebfe4ad748c7.png)
 
